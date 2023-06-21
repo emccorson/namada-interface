@@ -31,7 +31,8 @@ async function fetchAndStore(params) {
 
 async function fetchParams(params) {
   return fetch(
-    `https://github.com/anoma/masp-mpc/releases/download/namada-trusted-setup/${params}`
+    //`https://github.com/anoma/masp-mpc/releases/download/namada-trusted-setup/${params}`
+    `http://127.0.0.1:8080/${params}`
   )
     .then((response) => response.arrayBuffer())
     .then((ab) => new Uint8Array(ab));
