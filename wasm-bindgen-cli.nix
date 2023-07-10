@@ -13,16 +13,23 @@
 rustPlatform.buildRustPackage rec {
   pname = "wasm-bindgen-cli";
   #version = "0.2.84";
-  version = "0.2.86";
+  version = "0.2.87";
+
+  # Note when bumping version:
+  # There are two hashes: `sha256` and `cargo256`, but `nix develop`
+  # isn't nice about telling you which one is wrong. So to upgrade,
+  # just bump the version, and when `nix develop` throws an error,
+  # check the hash it got and replace that one. It will error twice
+  # and you'll need to replace both.
 
   src = fetchCrate {
     inherit pname version;
-    #sha256 = "sha256-0rK+Yx4/Jy44Fw5VwJ3tG243ZsyOIBBehYU54XP/JGk=";
-    sha256 = "sha256-56EOiLbdgAcoTrkyvB3t9TjtLaRvGxFUXx4haLwE2QY=";
+    # sha256 = "sha256-0rK+Yx4/Jy44Fw5VwJ3tG243ZsyOIBBehYU54XP/JGk=";
+    sha256 = "sha256-0u9bl+FkXEK2b54n7/l9JOCtKo+pb42GF9E1EnAUQa0=";
   };
 
   #cargoSha256 = "sha256-vcpxcRlW1OKoD64owFF6mkxSqmNrvY+y3Ckn5UwEQ50=";
-  cargoSha256 = "sha256-4CPBmz92PuPN6KeGDTdYPAf5+vTFk9EN5Cmx4QJy6yI=";
+  cargoSha256 = "sha256-AsZBtE2qHJqQtuCt/wCAgOoxYMfvDh8IzBPAOkYSYko=";
 
   nativeBuildInputs = [ pkg-config ];
 
