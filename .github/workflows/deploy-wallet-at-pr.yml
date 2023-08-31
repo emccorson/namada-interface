@@ -1,17 +1,6 @@
 name: Deploy wallet preview to netlify at PR and pushes to it
 on:
-  pull_request:
-    paths:
-      - "apps/namada-interface/**"
-      - "apps/extension/**"
-      - "packages/integrations/**"
-      - "packages/rpc/**"
-      - "packages/shared/**"
-      - "packages/tx/**"
-      - "packages/utils/**"
-      - "packages/wallet/**"
-      - "packages/wasm/**"
-      - ".github/workflows/**"
+  push:
 
 env:
   CI: false
