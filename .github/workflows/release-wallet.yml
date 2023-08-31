@@ -9,14 +9,11 @@ on:
       REACT_APP_NAMADA_CHAIN_ID:
         required: true
         type: string
-        default: "internal-devnet-6be.86067e06a5"
       REACT_APP_NAMADA_URL:
         required: true
         type: string
-        default: "https://proxy.heliax.click/internal-devnet-6be.86067e06a5"
       REACT_APP_NAMADA_FAUCET_ADDRESS:
         type: string
-        default: "atest1v4ehgw368pprgvjygv652w2yg3znvd69xucnvde3xaz5ysenx5myx3f389z5yv3nxg65xv3kx0fkez"
       REACT_APP_NAMADA_FAUCET_LIMIT:
         type: number
         default: 1000
