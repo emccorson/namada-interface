@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server . --cors"
+    "start": "http-server . --cors",
+    "download": "rm -f *.params && wget https://github.com/anoma/masp-mpc/releases/download/namada-trusted-setup/masp-{convert,output,spend}.params"
   },
   "keywords": [],
   "author": "",
