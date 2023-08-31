@@ -14,6 +14,12 @@ on:
         required: true
         type: string
         default: "https://proxy.heliax.click/internal-devnet-6be.86067e06a5"
+      REACT_APP_NAMADA_FAUCET_ADDRESS:
+        type: string
+        default: "atest1v4ehgw368pprgvjygv652w2yg3znvd69xucnvde3xaz5ysenx5myx3f389z5yv3nxg65xv3kx0fkez"
+      REACT_APP_NAMADA_FAUCET_LIMIT:
+        type: number
+        default: 1000
 env:
   CI: false
 jobs:
@@ -39,11 +45,14 @@ jobs:
           echo "REACT_APP_NAMADA_ALIAS: $REACT_APP_NAMADA_ALIAS" >> $GITHUB_STEP_SUMMARY
           echo "REACT_APP_NAMADA_CHAIN_ID: $REACT_APP_NAMADA_CHAIN_ID" >> $GITHUB_STEP_SUMMARY
           echo "REACT_APP_NAMADA_URL: $REACT_APP_NAMADA_URL" >> $GITHUB_STEP_SUMMARY
+          echo "REACT_APP_NAMADA_FAUCET_ADDRESS: $REACT_APP_NAMADA_FAUCET_ADDRESS" >> $GITHUB_STEP_SUMMARY
+          echo "REACT_APP_NAMADA_FAUCET_LIMIT: $REACT_APP_NAMADA_FAUCET_LIMIT" >> $GITHUB_STEP_SUMMARY
         env:
           REACT_APP_NAMADA_ALIAS: ${{ inputs.REACT_APP_NAMADA_ALIAS }}
           REACT_APP_NAMADA_CHAIN_ID: ${{ inputs.REACT_APP_NAMADA_CHAIN_ID }}
           REACT_APP_NAMADA_URL: ${{ inputs.REACT_APP_NAMADA_URL }}
-
+          REACT_APP_NAMADA_FAUCET_ADDRESS: ${{ inputs.REACT_APP_NAMADA_FAUCET_ADDRESS }}
+          REACT_APP_NAMADA_FAUCET_LIMIT: ${{ inputs.REACT_APP_NAMADA_FAUCET_LIMIT }}
 
   build-interface:
     needs: setup
@@ -75,6 +84,8 @@ jobs:
           REACT_APP_NAMADA_ALIAS: ${{ inputs.REACT_APP_NAMADA_ALIAS }}
           REACT_APP_NAMADA_CHAIN_ID: ${{ inputs.REACT_APP_NAMADA_CHAIN_ID }}
           REACT_APP_NAMADA_URL: ${{ inputs.REACT_APP_NAMADA_URL }}
+          REACT_APP_NAMADA_FAUCET_ADDRESS: ${{ inputs.REACT_APP_NAMADA_FAUCET_ADDRESS }}
+          REACT_APP_NAMADA_FAUCET_LIMIT: ${{ inputs.REACT_APP_NAMADA_FAUCET_LIMIT }}
 
       - uses: actions/upload-artifact@v3
         with:
@@ -118,6 +129,8 @@ jobs:
           REACT_APP_NAMADA_ALIAS: ${{ inputs.REACT_APP_NAMADA_ALIAS }}
           REACT_APP_NAMADA_CHAIN_ID: ${{ inputs.REACT_APP_NAMADA_CHAIN_ID }}
           REACT_APP_NAMADA_URL: ${{ inputs.REACT_APP_NAMADA_URL }}
+          REACT_APP_NAMADA_FAUCET_ADDRESS: ${{ inputs.REACT_APP_NAMADA_FAUCET_ADDRESS }}
+          REACT_APP_NAMADA_FAUCET_LIMIT: ${{ inputs.REACT_APP_NAMADA_FAUCET_LIMIT }}
 
       - uses: actions/upload-artifact@v3
         with:
@@ -161,6 +174,8 @@ jobs:
           REACT_APP_NAMADA_ALIAS: ${{ inputs.REACT_APP_NAMADA_ALIAS }}
           REACT_APP_NAMADA_CHAIN_ID: ${{ inputs.REACT_APP_NAMADA_CHAIN_ID }}
           REACT_APP_NAMADA_URL: ${{ inputs.REACT_APP_NAMADA_URL }}
+          REACT_APP_NAMADA_FAUCET_ADDRESS: ${{ inputs.REACT_APP_NAMADA_FAUCET_ADDRESS }}
+          REACT_APP_NAMADA_FAUCET_LIMIT: ${{ inputs.REACT_APP_NAMADA_FAUCET_LIMIT }}
 
       - uses: actions/upload-artifact@v3
         with:
@@ -211,10 +226,14 @@ jobs:
           echo "REACT_APP_NAMADA_ALIAS: $REACT_APP_NAMADA_ALIAS" >> RELEASE
           echo "REACT_APP_NAMADA_CHAIN_ID: $REACT_APP_NAMADA_CHAIN_ID" >> RELEASE
           echo "REACT_APP_NAMADA_URL: $REACT_APP_NAMADA_URL" >> RELEASE
+          echo "REACT_APP_NAMADA_FAUCET_ADDRESS: $REACT_APP_NAMADA_FAUCET_ADDRESS" >> RELEASE
+          echo "REACT_APP_NAMADA_FAUCET_LIMIT: $REACT_APP_NAMADA_FAUCET_LIMIT" >> RELEASE
         env:
           REACT_APP_NAMADA_ALIAS: ${{ inputs.REACT_APP_NAMADA_ALIAS }}
           REACT_APP_NAMADA_CHAIN_ID: ${{ inputs.REACT_APP_NAMADA_CHAIN_ID }}
           REACT_APP_NAMADA_URL: ${{ inputs.REACT_APP_NAMADA_URL }}
+          REACT_APP_NAMADA_FAUCET_ADDRESS: ${{ inputs.REACT_APP_NAMADA_FAUCET_ADDRESS }}
+          REACT_APP_NAMADA_FAUCET_LIMIT: ${{ inputs.REACT_APP_NAMADA_FAUCET_LIMIT }}
 
       - name: Create release
         id: create-release
