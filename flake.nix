@@ -21,6 +21,7 @@
             emscripten #using emcc because I can't get gcc or clang to work
             nodePackages.web-ext
             wget
+            cargo-watch
           ];
         };
       }
