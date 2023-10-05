@@ -6,9 +6,6 @@ import { TxMsgValue } from "./tx";
 import { IbcTransferProps } from "../types";
 
 export class IbcTransferMsgValue {
-  @field({ type: TxMsgValue })
-  tx!: InstanceType<typeof TxMsgValue>;
-
   @field({ type: "string" })
   source!: string;
 
@@ -35,6 +32,5 @@ export class IbcTransferMsgValue {
 
   constructor(data: IbcTransferProps) {
     Object.assign(this, data);
-    this.tx = new TxMsgValue(data.tx);
   }
 }

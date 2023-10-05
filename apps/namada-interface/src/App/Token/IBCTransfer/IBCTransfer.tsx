@@ -58,19 +58,19 @@ export const submitIbcTransfer = async (
   await integration.submitBridgeTransfer(
     {
       ibcProps: {
-        tx: {
-          token: Tokens.NAM.address || "",
-          feeAmount: new BigNumber(0),
-          gasLimit: new BigNumber(20_000),
-          publicKey,
-          chainId,
-        },
         source: address,
         receiver: target,
         token: Tokens[token as TokenType]?.address || "",
         amount,
         portId,
         channelId,
+      },
+      txProps: {
+        token: Tokens.NAM.address || "",
+        feeAmount: new BigNumber(0),
+        gasLimit: new BigNumber(20_000),
+        publicKey,
+        chainId,
       },
     },
     type

@@ -35,9 +35,15 @@ import { ActiveAccountStore } from "background/keyring";
 
   addEventListener(
     "message",
-    ({ data }: { data: SubmitTransferMessageData }) => {
+    async ({ data }: { data: SubmitTransferMessageData }) => {
+      const txMsg = fromBase64(data.txMsg);
+      const builtTx = await sdk.build_transfer(
+        fromBase64(data.transferMsg), txMsg, data.password, data.xsk
+      );
+      const [txBytes, revealPkTxBytes] = await sdk.sign_tx(builtTx, txMsg);
+
       sdk
-        .submit_transfer(fromBase64(data.txMsg), data.password, data.xsk)
+        .process_tx(txBytes, txMsg, revealPkTxBytes)
         .then(() => postMessage({ msgName: TRANSFER_SUCCESSFUL_MSG }))
         .catch((error) => {
           postMessage({

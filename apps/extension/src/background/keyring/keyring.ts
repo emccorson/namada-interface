@@ -595,37 +595,43 @@ export class KeyRing {
     return getAccountValuesFromStore(accounts);
   }
 
-  async submitBond(txMsg: Uint8Array): Promise<void> {
+  async submitBond(bondMsg: Uint8Array, txMsg: Uint8Array): Promise<void> {
     if (!this._password) {
       throw new Error("Not authenticated!");
     }
 
     try {
-      await this.sdk.submit_bond(txMsg, this._password);
+      const builtTx = await this.sdk.build_bond(bondMsg, txMsg, this._password);
+      const [txBytes, revealPkTxBytes] = await this.sdk.sign_tx(builtTx, txMsg);
+      await this.sdk.process_tx(txBytes, txMsg, revealPkTxBytes);
     } catch (e) {
       throw new Error(`Could not submit bond tx: ${e}`);
     }
   }
 
-  async submitUnbond(txMsg: Uint8Array): Promise<void> {
+  async submitUnbond(unbondMsg: Uint8Array, txMsg: Uint8Array): Promise<void> {
     if (!this._password) {
       throw new Error("Not authenticated!");
     }
 
     try {
-      await this.sdk.submit_unbond(txMsg, this._password);
+      const builtTx = await this.sdk.build_unbond(unbondMsg, txMsg, this._password);
+      const [txBytes, revealPkTxBytes] = await this.sdk.sign_tx(builtTx, txMsg);
+      await this.sdk.process_tx(txBytes, txMsg, revealPkTxBytes);
     } catch (e) {
       throw new Error(`Could not submit unbond tx: ${e}`);
     }
   }
 
-  async submitWithdraw(txMsg: Uint8Array): Promise<void> {
+  async submitWithdraw(withdrawMsg: Uint8Array, txMsg: Uint8Array): Promise<void> {
     if (!this._password) {
       throw new Error("Not authenticated!");
     }
 
     try {
-      await this.sdk.submit_withdraw(txMsg, this._password);
+      const builtTx = await this.sdk.build_withdraw(withdrawMsg, txMsg, this._password);
+      const [txBytes, revealPkTxBytes] = await this.sdk.sign_tx(builtTx, txMsg);
+      await this.sdk.process_tx(txBytes, txMsg, revealPkTxBytes);
     } catch (e) {
       throw new Error(`Could not submit withdraw tx: ${e}`);
     }
@@ -667,25 +673,31 @@ export class KeyRing {
     await submit(this._password, extendedSpendingKey);
   }
 
-  async submitIbcTransfer(txMsg: Uint8Array): Promise<void> {
+  async submitIbcTransfer(ibcTransferMsg: Uint8Array, txMsg: Uint8Array): Promise<void> {
     if (!this._password) {
       throw new Error("Not authenticated!");
     }
 
     try {
-      await this.sdk.submit_ibc_transfer(txMsg, this._password);
+      const builtTx =
+        await this.sdk.build_ibc_transfer(ibcTransferMsg, txMsg, this._password);
+      const [txBytes, revealPkTxBytes] = await this.sdk.sign_tx(builtTx, txMsg);
+      await this.sdk.process_tx(txBytes, txMsg, revealPkTxBytes);
     } catch (e) {
       throw new Error(`Could not submit ibc transfer tx: ${e}`);
     }
   }
 
-  async submitEthBridgeTransfer(txMsg: Uint8Array): Promise<void> {
+  async submitEthBridgeTransfer(ethBridgeTransferMsg: Uint8Array, txMsg: Uint8Array): Promise<void> {
     if (!this._password) {
       throw new Error("Not authenticated!");
     }
 
     try {
-      await this.sdk.submit_eth_bridge_transfer(txMsg, this._password);
+      const builtTx =
+        await this.sdk.build_eth_bridge_transfer(ethBridgeTransferMsg, txMsg, this._password);
+      const [txBytes, revealPkTxBytes] = await this.sdk.sign_tx(builtTx, txMsg);
+      await this.sdk.process_tx(txBytes, txMsg, revealPkTxBytes);
     } catch (e) {
       throw new Error(`Could not submit submit_eth_bridge_transfer tx: ${e}`);
     }
