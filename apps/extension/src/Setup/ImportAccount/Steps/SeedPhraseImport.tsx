@@ -34,7 +34,21 @@ export const SeedPhraseImport: React.FC<Props> = ({ onConfirm, requester }) => {
   const [mnemonicLength, setMnemonicLength] = useState(SHORT_PHRASE_COUNT);
   const mnemonicsRange = Array.from(Array(mnemonicLength).keys());
   const [mnemonics, setMnemonics] = useState<string[]>(
-    mnemonicsRange.map(() => "")
+    //mnemonicsRange.map(() => "")
+    [
+      "column",
+      "banana",
+      "aunt",
+      "acquire",
+      "dolphin",
+      "fruit",
+      "fever",
+      "rent",
+      "dawn",
+      "divert",
+      "book",
+      "amateur",
+    ]
   );
   const isSubmitButtonDisabled = mnemonics.some((mnemonic) => !mnemonic);
 
