@@ -52,7 +52,7 @@ const getExtensionId = async (browser: puppeteer.Browser): Promise<string> => {
 };
 
 export const openInterface = async (page: puppeteer.Page): Promise<void> => {
-  await page.goto("http://localhost:8080", {
+  await page.goto("http://localhost:3000", {
     waitUntil: ["domcontentloaded"],
   });
 };
