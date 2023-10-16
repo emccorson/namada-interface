@@ -165,7 +165,7 @@ const TokenSendForm = ({
     "High" = "0.001",
   }
 
-  const [gasFee, setGasFee] = useState<GasFee>(GasFee.Medium);
+  const [gasFee, setGasFee] = useState<GasFee>(GasFee.Low);
 
   const { chainId, fiatCurrency } = useAppSelector<SettingsState>(
     (state) => state.settings
