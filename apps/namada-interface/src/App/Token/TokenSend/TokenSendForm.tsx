@@ -79,7 +79,7 @@ export const submitTransferTransaction = async (
 
   const txArgs = {
     token: Tokens.NAM.address || "",
-    feeAmount: new BigNumber(0),
+    feeAmount,
     gasLimit: new BigNumber(20_000),
     chainId,
     publicKey: publicKey,

@@ -20,7 +20,7 @@ use wasm_bindgen::JsError;
 #[derive(BorshSerialize, BorshDeserialize)]
 pub struct TxMsg {
     token: String,
-    fee_amount: String,
+    fee_amount: Option<String>,
     gas_limit: String,
     chain_id: String,
     public_key: Option<String>,
@@ -403,9 +403,11 @@ fn tx_msg_into_args(
 
     let token = Address::from_str(&token)?;
 
-    let fee_amount = DenominatedAmount::from_str(&fee_amount)
-        .expect(format!("Fee amount has to be valid. Received {}", fee_amount).as_str());
-    let fee_input_amount = InputAmount::Unvalidated(fee_amount);
+    let fee_input_amount = fee_amount.map(|amount| {
+        let denominated_amount = DenominatedAmount::from_str(&amount)
+            .expect(format!("Fee amount has to be valid. Received {}", amount).as_str());
+        InputAmount::Unvalidated(denominated_amount)
+    });
 
     let password = password.map(|pwd| zeroize::Zeroizing::new(pwd));
     let public_key = match public_key {
@@ -427,7 +429,7 @@ fn tx_msg_into_args(
         ledger_address: (),
         wallet_alias_force: false,
         initialized_account_alias: None,
-        fee_amount: Some(fee_input_amount),
+        fee_amount: fee_input_amount,
         fee_token: token.clone(),
         fee_unshield: None,
         gas_limit: GasLimit::from_str(&gas_limit).expect("Gas limit to be valid"),

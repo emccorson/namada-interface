@@ -8,8 +8,8 @@ export class TxMsgValue {
   @field({ type: "string" })
   token!: string;
 
-  @field(BigNumberSerializer)
-  feeAmount!: BigNumber;
+  @field({ type: option(BigNumberSerializer) })
+  feeAmount?: BigNumber;
 
   @field(BigNumberSerializer)
   gasLimit!: BigNumber;
