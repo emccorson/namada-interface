@@ -92,8 +92,8 @@ export const EthereumBridge = (): JSX.Element => {
           feeToken: Tokens[feeTokenSymbol as TokenType]?.address || "",
         },
         txProps: {
-          token: Tokens.NAM.address || "",
-          feeAmount: new BigNumber(0),
+          gasToken: Tokens.NAM.address || "",
+          gasPrice: new BigNumber(0),
           gasLimit: new BigNumber(20_000),
           publicKey: account.details.publicKey,
           chainId,

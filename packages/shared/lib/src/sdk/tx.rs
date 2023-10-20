@@ -19,8 +19,8 @@ use wasm_bindgen::JsError;
 
 #[derive(BorshSerialize, BorshDeserialize)]
 pub struct TxMsg {
-    token: String,
-    fee_amount: Option<String>,
+    gas_token: String,
+    gas_price: Option<String>,
     gas_limit: String,
     chain_id: String,
     public_key: Option<String>,
@@ -393,17 +393,17 @@ fn tx_msg_into_args(
 ) -> Result<(args::Tx, Option<Address>), JsError> {
     let tx_msg = TxMsg::try_from_slice(tx_msg)?;
     let TxMsg {
-        token,
-        fee_amount,
+        gas_token,
+        gas_price,
         gas_limit,
         chain_id,
         public_key,
         signer,
     } = tx_msg;
 
-    let token = Address::from_str(&token)?;
+    let gas_token = Address::from_str(&gas_token)?;
 
-    let fee_input_amount = fee_amount.map(|amount| {
+    let fee_input_amount = gas_price.map(|amount| {
         let denominated_amount = DenominatedAmount::from_str(&amount)
             .expect(format!("Fee amount has to be valid. Received {}", amount).as_str());
         InputAmount::Unvalidated(denominated_amount)
@@ -430,7 +430,7 @@ fn tx_msg_into_args(
         wallet_alias_force: false,
         initialized_account_alias: None,
         fee_amount: fee_input_amount,
-        fee_token: token.clone(),
+        fee_token: gas_token.clone(),
         fee_unshield: None,
         gas_limit: GasLimit::from_str(&gas_limit).expect("Gas limit to be valid"),
         wrapper_fee_payer: None,

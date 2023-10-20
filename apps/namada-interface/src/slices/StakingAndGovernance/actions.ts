@@ -248,8 +248,8 @@ export const postNewBonding = createAsyncThunk<
       nativeToken: Tokens.NAM.address || "",
     },
     {
-      token: Tokens.NAM.address || "",
-      feeAmount: new BigNumber(0),
+      gasToken: Tokens.NAM.address || "",
+      gasPrice: new BigNumber(0),
       gasLimit: new BigNumber(20_000),
       chainId,
       publicKey,
@@ -284,8 +284,8 @@ export const postNewUnbonding = createAsyncThunk<
       amount: new BigNumber(amount),
     },
     {
-      token: Tokens.NAM.address || "",
-      feeAmount: new BigNumber(0),
+      gasToken: Tokens.NAM.address || "",
+      gasPrice: new BigNumber(0),
       gasLimit: new BigNumber(20_000),
       chainId,
       publicKey,
@@ -313,8 +313,8 @@ export const postNewWithdraw = createAsyncThunk<
       validator: validatorId,
     },
     {
-      token: Tokens.NAM.address || "",
-      feeAmount: new BigNumber(0),
+      gasToken: Tokens.NAM.address || "",
+      gasPrice: new BigNumber(0),
       gasLimit: new BigNumber(20_000),
       chainId,
       publicKey,

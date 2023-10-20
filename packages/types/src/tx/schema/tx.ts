@@ -6,10 +6,10 @@ import { TxProps } from "../types";
 
 export class TxMsgValue {
   @field({ type: "string" })
-  token!: string;
+  gasToken!: string;
 
   @field({ type: option(BigNumberSerializer) })
-  feeAmount?: BigNumber;
+  gasPrice?: BigNumber;
 
   @field(BigNumberSerializer)
   gasLimit!: BigNumber;
