@@ -18,7 +18,6 @@ import {
   FaucetTransferContent,
 } from "./FaucetTransferForm.components";
 import { InputContainer } from "App/Token/TokenSend/TokenSendForm.components";
-import { submitTransferTransaction } from "App/Token/TokenSend/TokenSendForm";
 import BigNumber from "bignumber.js";
 import { defaultChainId } from "@namada/chains";
 
@@ -68,7 +67,7 @@ export const FaucetTransferForm = ({
       token: tokenType as TokenType,
       notify: true,
     };
-    submitTransferTransaction(transferArgs);
+    //submitTransferTransaction(transferArgs);
     cancelCallback && cancelCallback();
   }, [account, amount]);
 

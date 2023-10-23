@@ -239,3 +239,11 @@ export const showMaybeNam = (maybeNam: BigNumber | undefined): string =>
 export const isEmptyObject = (object: Record<string, unknown>): boolean => {
   return Object.keys(object).length === 0;
 };
+
+// lifted from the fp-ts library
+export interface NonEmptyArray<A> extends Array<A> {
+  0: A
+}
+
+export const isNonEmpty = <A>(array: Array<A>): array is NonEmptyArray<A> =>
+  array[0] !== undefined;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BigNumber from "bignumber.js";
 
 import { Account, AccountsState } from "slices/accounts";
 import { SettingsState } from "slices/settings";
@@ -17,6 +18,8 @@ import {
 } from "@namada/components";
 import TokenSendForm from "./TokenSendForm";
 import { useSanitizedParams } from "@namada/hooks";
+import { isNonEmpty, NonEmptyArray } from "@namada/utils";
+import { Query } from "@namada/shared";
 
 import { TokenSendContainer, TokenSendContent } from "./TokenSend.components";
 import {
@@ -26,6 +29,8 @@ import {
   ESTABLISHED_ADDRESS_PREFIX,
 } from "./types";
 import { chains } from "@namada/chains";
+
+import { BalanceEntry } from "./TokenSendForm";
 
 export const parseTarget = (target: string): TransferType | undefined => {
   if (
@@ -59,6 +64,19 @@ const accountsWithBalanceIntoSelectData = (
         label: `${details.alias} ${amount} (${tokenType})`,
       }))
   );
+
+const transform = (accounts: Account[]): NonEmptyArray<BalanceEntry> | undefined => {
+  const result = accounts.flatMap(({ details, balance }) =>
+    Object.entries(balance)
+      .map(([tokenType, amount]) => ({
+        account: details,
+        balance: amount,
+        token: tokenType as TokenType
+      }))
+  );
+
+  return isNonEmpty(result) ? result : undefined;
+}
 
 const TokenSend = (): JSX.Element => {
   const { derived } = useAppSelector<AccountsState>((state) => state.accounts);
@@ -121,6 +139,31 @@ const TokenSend = (): JSX.Element => {
       setToken(tokenSymbol as TokenType);
     };
 
+  const [minimumGasPrices, setMinimumGasPrices] = useState<Record<TokenType, BigNumber>>();
+  useEffect(() => {
+    (async () => {
+      const { rpc } = chains[chainId];
+      const query = new Query(rpc);
+      const queryResult = await query.query_gas_costs() as [string, string][];
+      const namEntry =
+        queryResult.find(([address]) => address === Tokens["NAM"].address);
+
+      if (namEntry) {
+        setMinimumGasPrices({
+          "NAM": new BigNumber(namEntry[1]),
+          // TODO: query the real minimum gas prices for non-NAM tokens
+          "ATOM": new BigNumber(0),
+          "ETH": new BigNumber(0),
+          "TESTERC20": new BigNumber(0),
+          "NUTTESTERC20": new BigNumber(0),
+        });
+      }
+    })();
+  }, []);
+
+  const transparentTransformed = transform(transparentAccountsWithBalance);
+  const shieldedTransformed = transform(shieldedAccountsWithBalance);
+
   return (
     <TokenSendContainer>
       <NavigationContainer>
@@ -139,23 +182,14 @@ const TokenSend = (): JSX.Element => {
         ))}
       </TabsGroup>
 
-      {activeTab === "Shielded" && (
+      {activeTab === "Shielded" && shieldedTransformed && minimumGasPrices && (
         <TokenSendContent>
           {shieldedTokenData.length > 0 ? (
             <>
-              <Select
-                data={shieldedTokenData}
-                value={`${selectedShieldedAccountAddress}|${token}`}
-                label="Token"
-                onChange={handleTokenChange(setSelectedShieldedAccountAddress)}
-              />
               {selectedShieldedAccountAddress && (
                 <TokenSendForm
-                  address={selectedShieldedAccountAddress}
-                  tokenType={token}
-                  defaultTarget={
-                    target?.startsWith("patest") ? target : undefined
-                  }
+                  accounts={shieldedTransformed}
+                  minimumGasPrices={minimumGasPrices}
                 />
               )}
             </>
@@ -165,25 +199,14 @@ const TokenSend = (): JSX.Element => {
         </TokenSendContent>
       )}
 
-      {activeTab === "Transparent" && (
+      {activeTab === "Transparent" && transparentTransformed && minimumGasPrices && (
         <TokenSendContent>
           {transparentTokenData.length > 0 ? (
             <>
-              <Select
-                data={transparentTokenData}
-                value={`${selectedTransparentAccountAddress}|${token}`}
-                label="Token"
-                onChange={handleTokenChange(
-                  setSelectedTransparentAccountAddress
-                )}
-              />
               {selectedTransparentAccountAddress && (
                 <TokenSendForm
-                  address={selectedTransparentAccountAddress}
-                  tokenType={token}
-                  defaultTarget={
-                    target?.startsWith("atest") ? target : undefined
-                  }
+                  accounts={transparentTransformed}
+                  minimumGasPrices={minimumGasPrices}
                 />
               )}
             </>
