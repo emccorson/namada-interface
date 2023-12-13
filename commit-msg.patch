@@ -1,0 +1,4 @@
+1c1
+< #!/bin/bash
+---
+> #!/usr/bin/env bash
