@@ -56,6 +56,36 @@ export const SeedPhraseImport: React.FC<Props> = ({
     Array.from(mnemonicsRange)
   );
 
+  React.useEffect(() => {
+    setMnemonics([
+      "pause",
+      "neutral",
+      "royal",
+      "fiber",
+      "castle",
+      "limit",
+      "method",
+      "curious",
+      "worry",
+      "april",
+      "law",
+      "soul",
+      "tag",
+      "powder",
+      "grain",
+      "category",
+      "awful",
+      "foil",
+      "elbow",
+      "swear",
+      "tent",
+      "enable",
+      "scorpion",
+      "attract",
+    ]);
+    setMnemonicType(SecretType.MnemonicTwentyFourWords);
+  }, []);
+
   const privateKeyError = (() => {
     const validation = validatePrivateKey(filterPrivateKeyPrefix(privateKey));
     if (validation.ok) {
