@@ -56,6 +56,36 @@ export const SeedPhraseImport: React.FC<Props> = ({
     Array.from(mnemonicsRange)
   );
 
+  React.useEffect(() => {
+    setMnemonics([
+      "pause",
+      "neutral",
+      "royal",
+      "fiber",
+      "castle",
+      "limit",
+      "method",
+      "curious",
+      "worry",
+      "april",
+      "law",
+      "soul",
+      "tag",
+      "powder",
+      "grain",
+      "category",
+      "awful",
+      "foil",
+      "elbow",
+      "swear",
+      "tent",
+      "enable",
+      "scorpion",
+      "attract",
+    ]);
+    setMnemonicType(SecretType.MnemonicTwentyFourWords);
+  }, []);
+
   const privateKeyError = (() => {
     const validation = validatePrivateKey(filterPrivateKeyPrefix(privateKey));
     if (validation.ok) {
@@ -76,7 +106,7 @@ export const SeedPhraseImport: React.FC<Props> = ({
   const isSubmitButtonDisabled =
     mnemonicType === SecretType.PrivateKey ?
       privateKey === "" || privateKeyError !== ""
-      : mnemonics.slice(0, mnemonicType).some((mnemonic) => !mnemonic);
+    : mnemonics.slice(0, mnemonicType).some((mnemonic) => !mnemonic);
 
   const onPaste = useCallback(
     (index: number, e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -154,7 +184,7 @@ export const SeedPhraseImport: React.FC<Props> = ({
           setInvalidWordIndex(invalidWordIndex);
           typeof invalidWordIndex === "number" ?
             setMnemonicError(`Word #${invalidWordIndex + 1} is invalid!`)
-            : setMnemonicError(error);
+          : setMnemonicError(error);
         } else {
           setMnemonicError(error);
         }
