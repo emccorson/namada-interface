@@ -2,3 +2,4 @@ node_modules
 build
 *.lock
 trees
+apps/extension/coverage
