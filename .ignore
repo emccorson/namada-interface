@@ -3,3 +3,4 @@ build
 *.lock
 trees
 apps/extension/coverage
+apps/namada-interface
