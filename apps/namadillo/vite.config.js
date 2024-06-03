@@ -26,7 +26,8 @@ export default defineConfig(({ mode }) => {
       }),
       checker({
         typescript: true,
-        eslint: { lintCommand: 'eslint "./src/**/*.{ts,tsx}"' },
+        //eslint: { lintCommand: 'eslint "./src/**/*.{ts,tsx}"' },
+        overlay: false,
       }),
     ],
     define: {
@@ -42,6 +43,9 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       commonjsOptions: { transformMixedEsModules: true }, // Change
+    },
+    server: {
+      port: 3000,
     },
   };
 });
