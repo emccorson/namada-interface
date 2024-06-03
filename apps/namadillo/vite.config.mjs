@@ -12,6 +12,7 @@ export default defineConfig(() => {
         "Cross-Origin-Opener-Policy": "same-origin",
         "Cross-Origin-Embedder-Policy": "require-corp",
       },
+      port: 3000,
     },
     plugins: [
       react(),
@@ -21,8 +22,8 @@ export default defineConfig(() => {
       }),
       checker({
         typescript: true,
-        eslint: { lintCommand: 'eslint "./src/**/*.{ts,tsx}"' },
-        overlay: { initialIsOpen: false },
+        //eslint: { lintCommand: 'eslint "./src/**/*.{ts,tsx}"' },
+        overlay: false,
       }),
     ],
     worker: {
