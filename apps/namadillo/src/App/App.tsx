@@ -21,7 +21,7 @@ export function App(): JSX.Element {
   useTransactionNotifications();
   useTransactionCallback();
 
-  const isSmallScreen = useSmallScreen();
+  const isSmallScreen = false;
   const chain = useAtomValue(chainAtom);
   const extensionAttachStatus = useUntilIntegrationAttached(chain);
   const currentExtensionAttachStatus =
