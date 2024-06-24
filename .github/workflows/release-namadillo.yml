@@ -1,0 +1,55 @@
+name: Create Namadillo draft release
+on:
+  workflow_dispatch:
+    inputs:
+      REF:
+        required: true
+        type: string
+        default: "main"
+      INCREMENT:
+        required: true
+        type: string
+        default: "patch"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/namadillo
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.REF }}
+
+      - name: Install yarn dependencies
+        uses: ./.github/actions/yarn-cache
+
+      - name: Restore Rust cache
+        uses: ./.github/actions/rust-cache
+        with:
+          cache-name: build
+
+      - name: Install protoc
+        run: sudo apt-get install -y protobuf-compiler
+
+      - name: Build Namadillo
+        run: yarn build
+
+      # TODO: It should be possible to do this step inside the release-it config
+      # by using a hook and passing the version variable, but it wasn't working
+      # so this is a workaround.
+      - name: Package Namadillo
+        run: scripts/package.sh $(npx release-it -i $INCREMENT --release-version | tail -n 1)
+
+      - name: Configure git identity
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - name: Create a draft release
+        run: npx release-it --increment $INCREMENT
+        env:
+          INCREMENT: ${{ inputs.INCREMENT }}
+          GITHUB_TOKEN: ${{ github.token }}
