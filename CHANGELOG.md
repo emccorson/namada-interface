@@ -5,5 +5,6 @@ Unreleased
 ----------
 
 ### Fixed
+- Fix a thing
 
 ### Added
