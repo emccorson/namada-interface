@@ -2,3 +2,5 @@
 /.yarn/plugins/** binary
 yarn.lock binary
 Cargo.lock binary
+
+CHANGELOG.md merge=union
