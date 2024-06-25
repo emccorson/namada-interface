@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.2.7] - 2024-06-25
 
 Try again.
 

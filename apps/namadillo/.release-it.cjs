@@ -1,6 +1,6 @@
 module.exports = {
   hooks: {
-    "before:github:init": "scripts/package.sh ${version}"
+    "before:bump": "scripts/package.sh ${version}"
   },
   git: {
     commitMessage: "chore: release namadillo v${version}",
