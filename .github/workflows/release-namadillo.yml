@@ -41,7 +41,10 @@ jobs:
       # by using a hook and passing the version variable, but it wasn't working
       # so this is a workaround.
       - name: Package Namadillo
-        run: scripts/package.sh $(npx release-it -i $INCREMENT --release-version | tail -n 1)
+        run: scripts/package.sh $(npx release-it -i $INCREMENT --release-version | tail -n 1 | tr -d \\n)
+        env:
+          INCREMENT: ${{ inputs.INCREMENT }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Configure git identity
         run: |
@@ -53,3 +56,5 @@ jobs:
         env:
           INCREMENT: ${{ inputs.INCREMENT }}
           GITHUB_TOKEN: ${{ github.token }}
+
+      - run: ls -l

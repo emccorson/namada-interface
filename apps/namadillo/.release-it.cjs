@@ -8,7 +8,7 @@ module.exports = {
     release: true,
     draft: true,
     releaseName: "Namadillo ${version}",
-    assets: ["namadillo-${version}.zip"],
+    assets: ["namadillo-*.zip"],
   },
   npm: {
     publish: false

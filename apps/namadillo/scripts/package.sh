@@ -17,4 +17,4 @@ cp -r dist $DIR
 cp README-dist.md $DIR/README.md
 cp CHANGELOG.md $DIR
 
-zip -r $DIR $DIR
+zip -r "$DIR.zip" $DIR
