@@ -12,5 +12,10 @@ module.exports = {
   },
   npm: {
     publish: false
+  },
+  plugins: {
+    "@release-it/keep-a-changelog": {
+      strictLatest: false, // TODO: remove after initial release
+    }
   }
 };

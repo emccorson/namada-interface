@@ -10,6 +10,7 @@ on:
         required: true
         type: string
         default: "patch"
+        description: "major/minor/patch etc."
 
 jobs:
   release:

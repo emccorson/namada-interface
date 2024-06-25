@@ -1,4 +1,5 @@
-CHANGELOG
-=========
+# Changelog
 
-TODO: Add CHANGELOG
+## [Unreleased]
+
+Initial release.
