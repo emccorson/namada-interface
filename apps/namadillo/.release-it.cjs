@@ -1,4 +1,7 @@
 module.exports = {
+  hooks: {
+    "before:github": "scripts/package.sh ${version}"
+  },
   git: {
     commitMessage: "chore: release namadillo v${version}",
     tagName: "namadillo-${version}",

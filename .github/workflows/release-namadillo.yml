@@ -6,11 +6,12 @@ on:
         required: true
         type: string
         default: "main"
+        description: "Git ref to release"
       INCREMENT:
         required: true
         type: string
         default: "patch"
-        description: "major/minor/patch etc."
+        description: "Version increment (major/minor/patch etc.)"
 
 jobs:
   release:
@@ -38,14 +39,14 @@ jobs:
       - name: Build Namadillo
         run: yarn build
 
-      # TODO: It should be possible to do this step inside the release-it config
-      # by using a hook and passing the version variable, but it wasn't working
-      # so this is a workaround.
-      - name: Package Namadillo
-        run: scripts/package.sh $(npx release-it -i $INCREMENT --release-version | tail -n 1 | tr -d \\n)
-        env:
-          INCREMENT: ${{ inputs.INCREMENT }}
-          GITHUB_TOKEN: ${{ github.token }}
+      ## TODO: It should be possible to do this step inside the release-it config
+      ## by using a hook and passing the version variable, but it wasn't working
+      ## so this is a workaround.
+      #- name: Package Namadillo
+      #  run: scripts/package.sh $(npx release-it -i $INCREMENT --release-version | tail -n 1 | tr -d \\n)
+      #  env:
+      #    INCREMENT: ${{ inputs.INCREMENT }}
+      #    GITHUB_TOKEN: ${{ github.token }}
 
       - name: Configure git identity
         run: |
