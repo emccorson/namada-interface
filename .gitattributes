@@ -2,3 +2,5 @@
 /.yarn/plugins/** binary
 yarn.lock binary
 Cargo.lock binary
+/packages/sdk/docs/**/*.md binary
+/packages/types/docs/**/*.md binary
